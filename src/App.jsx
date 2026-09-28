@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import DashboardLayout from "./layouts/DashboardLayout";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
 
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
@@ -13,32 +15,55 @@ import Privileges from "./pages/Privileges";
 import Settings from "./pages/Settings";
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const pageTitles = {
+    "/": "Dashboard",
+    "/transactions": "Transactions",
+    "/accounts": "Accounts",
+    "/investments": "Investments",
+    "/credit-cards": "Credit Cards",
+    "/loans": "Loans",
+    "/services": "Services",
+    "/privileges": "My Privileges",
+    "/settings": "Settings",
+  };
+
+  const title = pageTitles[location.pathname] || "Dashboard";
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DashboardLayout />}>
+    <div className="min-h-screen bg-[#f5f7fb] flex">
 
-          <Route index element={<Dashboard />} />
+      <Sidebar
+        mobileOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
 
-          <Route path="transactions" element={<Transactions />} />
+      <div className="flex-1 min-w-0 flex flex-col">
 
-          <Route path="accounts" element={<Accounts />} />
+        <Header
+          title={title}
+          mobileMenuOpen={mobileMenuOpen}
+          onMenuClick={() => setMobileMenuOpen((prev) => !prev)}
+        />
 
-          <Route path="investments" element={<Investments />} />
+        <main className="flex-1 min-w-0 overflow-x-hidden">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/accounts" element={<Accounts />} />
+            <Route path="/investments" element={<Investments />} />
+            <Route path="/credit-cards" element={<CreditCards />} />
+            <Route path="/loans" element={<Loans />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/privileges" element={<Privileges />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </main>
 
-          <Route path="credit-cards" element={<CreditCards />} />
-
-          <Route path="loans" element={<Loans />} />
-
-          <Route path="services" element={<Services />} />
-
-          <Route path="privileges" element={<Privileges />} />
-
-          <Route path="settings" element={<Settings />} />
-
-        </Route>
-      </Routes>
-    </BrowserRouter>
+      </div>
+    </div>
   );
 }
 

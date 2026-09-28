@@ -14,8 +14,6 @@ import {
   X,
 } from "lucide-react";
 
-const PROFILE_IMAGE = "https://i.pravatar.cc/100?img=32";
-
 const transactions = [
   {
     name: "Spotify Subscription",
@@ -109,23 +107,25 @@ function StatCard({
     <button
       type="button"
       onClick={onClick}
-      className="flex h-[92px] w-full items-center gap-4 rounded-[18px] bg-white px-5 text-left transition hover:-translate-y-1 hover:shadow-md"
+      className="flex h-[92px] w-full items-center gap-3 rounded-[18px] bg-white px-4 text-left transition hover:-translate-y-1 hover:shadow-md sm:gap-4 sm:px-5"
     >
       <div
-        className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full"
+        className="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full sm:h-[52px] sm:w-[52px]"
         style={{ backgroundColor: background }}
       >
         <Icon
-          size={22}
+          size={21}
           strokeWidth={1.7}
           style={{ color: iconColor }}
         />
       </div>
 
-      <div>
-        <p className="text-[12px] text-[#8994aa]">{title}</p>
+      <div className="min-w-0">
+        <p className="truncate text-[11px] text-[#8994aa] sm:text-[12px]">
+          {title}
+        </p>
 
-        <p className="mt-1 text-[20px] font-semibold text-[#252b4a]">
+        <p className="mt-1 text-[18px] font-semibold text-[#252b4a] sm:text-[20px]">
           {amount}
         </p>
       </div>
@@ -143,7 +143,9 @@ function MyCard({ onClick }) {
       <div className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-[9px] text-white/70">Balance</p>
+            <p className="text-[9px] text-white/70">
+              Balance
+            </p>
 
             <p className="mt-1 text-[16px] font-medium">
               $5,756
@@ -153,7 +155,7 @@ function MyCard({ onClick }) {
           <CreditCard size={29} strokeWidth={1.5} />
         </div>
 
-        <div className="mt-6 flex gap-12">
+        <div className="mt-6 flex gap-8 sm:gap-12">
           <div>
             <p className="text-[8px] text-white/60">
               CARD HOLDER
@@ -177,7 +179,7 @@ function MyCard({ onClick }) {
       </div>
 
       <div className="flex items-center justify-between bg-white/10 px-5 py-4">
-        <span className="text-[15px] font-medium tracking-wide">
+        <span className="text-[13px] font-medium tracking-wide sm:text-[15px]">
           3778 ** ** 1234
         </span>
 
@@ -192,69 +194,74 @@ function MyCard({ onClick }) {
 
 function LastTransaction({ onTransactionClick }) {
   return (
-    <div>
+    <div className="min-w-0">
       <h2 className="mb-4 text-[17px] font-semibold text-[#343b63]">
         Last Transaction
       </h2>
 
-      <div className="rounded-[18px] bg-white px-5">
-        {transactions.map((item, index) => {
-          const Icon = item.icon;
+      <div className="overflow-x-auto rounded-[18px] bg-white">
+        <div className="min-w-[700px] px-5">
+          {transactions.map((item, index) => {
+            const Icon = item.icon;
 
-          return (
-            <button
-              type="button"
-              key={item.name}
-              onClick={() => onTransactionClick(item)}
-              className={`grid w-full grid-cols-[1.7fr_1fr_0.9fr_0.9fr_0.7fr] items-center py-3 text-left transition hover:bg-[#fafbff] ${
-                index !== transactions.length - 1
-                  ? "border-b border-[#f0f2f6]"
-                  : ""
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className="flex h-[42px] w-[42px] items-center justify-center rounded-full"
-                  style={{ backgroundColor: item.bg }}
-                >
-                  <Icon size={18} style={{ color: item.color }} />
-                </div>
-
-                <div>
-                  <p className="text-[12px] font-medium text-[#343b63]">
-                    {item.name}
-                  </p>
-
-                  <p className="mt-1 text-[9px] text-[#9aa4b7]">
-                    {item.date}
-                  </p>
-                </div>
-              </div>
-
-              <span className="text-[11px] text-[#8995ad]">
-                {item.type}
-              </span>
-
-              <span className="text-[11px] text-[#8995ad]">
-                {item.card}
-              </span>
-
-              <span className="text-[11px] text-[#8995ad]">
-                {item.status}
-              </span>
-
-              <span
-                className={`text-right text-[12px] font-medium ${
-                  item.amount.startsWith("-")
-                    ? "text-[#ef7192]"
-                    : "text-[#20c9a3]"
+            return (
+              <button
+                type="button"
+                key={item.name}
+                onClick={() => onTransactionClick(item)}
+                className={`grid w-full grid-cols-[1.7fr_1fr_0.9fr_0.9fr_0.7fr] items-center py-3 text-left transition hover:bg-[#fafbff] ${
+                  index !== transactions.length - 1
+                    ? "border-b border-[#f0f2f6]"
+                    : ""
                 }`}
               >
-                {item.amount}
-              </span>
-            </button>
-          );
-        })}
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full"
+                    style={{ backgroundColor: item.bg }}
+                  >
+                    <Icon
+                      size={18}
+                      style={{ color: item.color }}
+                    />
+                  </div>
+
+                  <div>
+                    <p className="whitespace-nowrap text-[12px] font-medium text-[#343b63]">
+                      {item.name}
+                    </p>
+
+                    <p className="mt-1 text-[9px] text-[#9aa4b7]">
+                      {item.date}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="text-[11px] text-[#8995ad]">
+                  {item.type}
+                </span>
+
+                <span className="text-[11px] text-[#8995ad]">
+                  {item.card}
+                </span>
+
+                <span className="text-[11px] text-[#8995ad]">
+                  {item.status}
+                </span>
+
+                <span
+                  className={`text-right text-[12px] font-medium ${
+                    item.amount.startsWith("-")
+                      ? "text-[#ef7192]"
+                      : "text-[#20c9a3]"
+                  }`}
+                >
+                  {item.amount}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -264,14 +271,14 @@ function DebitCreditChart() {
   const [selected, setSelected] = useState(null);
 
   return (
-    <div>
+    <div className="min-w-0">
       <h2 className="mb-4 text-[17px] font-semibold text-[#343b63]">
         Debit & Credit Overview
       </h2>
 
-      <div className="rounded-[18px] bg-white p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-[12px] text-[#8190aa]">
+      <div className="rounded-[18px] bg-white p-4 sm:p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[11px] text-[#8190aa] sm:text-[12px]">
             <span className="font-medium text-[#4f5d7b]">
               $7,560
             </span>{" "}
@@ -297,12 +304,12 @@ function DebitCreditChart() {
 
         {selected && (
           <div className="mt-3 rounded-xl bg-[#f7f9fc] px-4 py-2 text-[11px] text-[#343b63]">
-            <b>{selected.day}</b> — Debit: ${selected.debit} | Credit: $
-            {selected.credit}
+            <b>{selected.day}</b> — Debit: ${selected.debit} |
+            Credit: ${selected.credit}
           </div>
         )}
 
-        <div className="relative mt-4 h-[205px]">
+        <div className="relative mt-4 h-[190px] sm:h-[205px]">
           {[0, 25, 50, 75, 100].map((position) => (
             <div
               key={position}
@@ -311,7 +318,7 @@ function DebitCreditChart() {
             />
           ))}
 
-          <div className="absolute inset-0 flex items-end justify-between px-2">
+          <div className="absolute inset-0 flex items-end justify-between px-1 sm:px-2">
             {chartData.map((item) => (
               <button
                 type="button"
@@ -319,14 +326,14 @@ function DebitCreditChart() {
                 onClick={() => setSelected(item)}
                 className="flex h-full flex-1 items-end justify-center"
               >
-                <div className="flex items-end gap-[7px]">
+                <div className="flex items-end gap-[3px] sm:gap-[7px]">
                   <div
-                    className="w-[22px] rounded-t-[8px] bg-[#3031e8] transition hover:opacity-70"
+                    className="w-[12px] rounded-t-[6px] bg-[#3031e8] transition hover:opacity-70 sm:w-[22px] sm:rounded-t-[8px]"
                     style={{ height: `${item.debit}px` }}
                   />
 
                   <div
-                    className="w-[22px] rounded-t-[8px] bg-[#f5a313] transition hover:opacity-70"
+                    className="w-[12px] rounded-t-[6px] bg-[#f5a313] transition hover:opacity-70 sm:w-[22px] sm:rounded-t-[8px]"
                     style={{ height: `${item.credit}px` }}
                   />
                 </div>
@@ -339,7 +346,7 @@ function DebitCreditChart() {
           {chartData.map((item) => (
             <span
               key={item.day}
-              className="flex-1 text-center text-[10px] text-[#8995ad]"
+              className="flex-1 text-center text-[9px] text-[#8995ad] sm:text-[10px]"
             >
               {item.day}
             </span>
@@ -352,12 +359,12 @@ function DebitCreditChart() {
 
 function InvoicesSent({ onInvoiceClick }) {
   return (
-    <div>
+    <div className="min-w-0">
       <h2 className="mb-4 text-[17px] font-semibold text-[#343b63]">
         Invoices Sent
       </h2>
 
-      <div className="rounded-[18px] bg-white px-5 py-3">
+      <div className="rounded-[18px] bg-white px-4 py-3 sm:px-5">
         {invoices.map((item) => {
           const Icon = item.icon;
 
@@ -368,16 +375,19 @@ function InvoicesSent({ onInvoiceClick }) {
               onClick={() => onInvoiceClick(item)}
               className="flex w-full items-center justify-between rounded-xl py-3 text-left transition hover:bg-[#fafbff]"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 items-center gap-3">
                 <div
-                  className="flex h-[45px] w-[45px] items-center justify-center rounded-full"
+                  className="flex h-[45px] w-[45px] shrink-0 items-center justify-center rounded-full"
                   style={{ backgroundColor: item.bg }}
                 >
-                  <Icon size={20} style={{ color: item.color }} />
+                  <Icon
+                    size={20}
+                    style={{ color: item.color }}
+                  />
                 </div>
 
-                <div>
-                  <p className="text-[12px] text-[#737e96]">
+                <div className="min-w-0">
+                  <p className="truncate text-[12px] text-[#737e96]">
                     {item.name}
                   </p>
 
@@ -387,7 +397,7 @@ function InvoicesSent({ onInvoiceClick }) {
                 </div>
               </div>
 
-              <span className="text-[11px] text-[#8190aa]">
+              <span className="ml-3 shrink-0 text-[11px] text-[#8190aa]">
                 {item.amount}
               </span>
             </button>
@@ -402,8 +412,8 @@ function Popup({ data, onClose }) {
   if (!data) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-5">
-      <div className="w-full max-w-[380px] rounded-[22px] bg-white p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4 sm:p-5">
+      <div className="w-full max-w-[380px] rounded-[22px] bg-white p-5 shadow-2xl sm:p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-[18px] font-semibold text-[#343b63]">
             Details
@@ -489,15 +499,15 @@ export default function Accounts() {
 
   return (
     <div className="min-h-screen bg-[#f5f7fb]">
-      {/* MAIN */}
-
-      <main className="p-5 md:p-7">
+      <main className="p-3 sm:p-4 md:p-6 lg:p-7">
 
         {/* SEARCH */}
-
         <div className="mb-5 flex justify-end">
-          <div className="flex h-[40px] w-full max-w-[280px] items-center gap-2 rounded-full bg-white px-4 shadow-sm">
-            <Search size={17} className="text-[#8994aa]" />
+          <div className="flex h-[40px] w-full max-w-none items-center gap-2 rounded-full bg-white px-4 shadow-sm sm:max-w-[280px]">
+            <Search
+              size={17}
+              className="shrink-0 text-[#8994aa]"
+            />
 
             <input
               type="text"
@@ -510,8 +520,7 @@ export default function Accounts() {
         </div>
 
         {/* TOP CARDS */}
-
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
           <StatCard
             title="My Balance"
             amount="$12,750"
@@ -558,13 +567,12 @@ export default function Accounts() {
         </div>
 
         {/* LAST TRANSACTION + MY CARD */}
-
         <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-[1.7fr_0.65fr]">
           <LastTransaction
             onTransactionClick={(item) => setPopup(item)}
           />
 
-          <div>
+          <div className="min-w-0">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-[17px] font-semibold text-[#343b63]">
                 My Card
@@ -601,7 +609,6 @@ export default function Accounts() {
         </div>
 
         {/* CHART + INVOICES */}
-
         <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-[1.7fr_0.65fr]">
           <DebitCreditChart />
 
@@ -611,19 +618,19 @@ export default function Accounts() {
         </div>
 
         {/* SHOW ALL */}
-
         <div className="mt-6 flex justify-center">
           <button
             type="button"
             onClick={() => setShowAll(!showAll)}
-            className="rounded-full border border-[#1814f3] px-6 py-2 text-[11px] font-medium text-[#1814f3] transition hover:bg-[#1814f3] hover:text-white"
+            className="rounded-full border border-[#1814f3] px-5 py-2 text-[11px] font-medium text-[#1814f3] transition hover:bg-[#1814f3] hover:text-white sm:px-6"
           >
-            {showAll ? "Show Less" : "Show All Transactions"}
+            {showAll
+              ? "Show Less"
+              : "Show All Transactions"}
           </button>
         </div>
 
-        {/* Search result */}
-
+        {/* SEARCH RESULT */}
         {search && (
           <div className="mt-4 rounded-xl bg-white p-4 text-center text-[12px] text-[#343b63]">
             {filteredTransactions.length > 0
@@ -634,7 +641,6 @@ export default function Accounts() {
       </main>
 
       {/* POPUP */}
-
       <Popup
         data={popup}
         onClose={() => setPopup(null)}

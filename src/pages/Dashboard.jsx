@@ -1,8 +1,5 @@
 import { motion } from "framer-motion";
 import {
-  Search,
-  Settings,
-  Bell,
   ChevronRight,
   Send,
   CreditCard,
@@ -49,16 +46,6 @@ const transactions = [
   },
 ];
 
-const weeklyData = [
-  { day: "Sat", deposit: 470, withdraw: 240 },
-  { day: "Sun", deposit: 350, withdraw: 130 },
-  { day: "Mon", deposit: 330, withdraw: 260 },
-  { day: "Tue", deposit: 470, withdraw: 370 },
-  { day: "Wed", deposit: 150, withdraw: 240 },
-  { day: "Thu", deposit: 390, withdraw: 250 },
-  { day: "Fri", deposit: 400, withdraw: 340 },
-];
-
 const people = [
   {
     name: "Livia Bator",
@@ -81,7 +68,7 @@ function BankCard({ card }) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className={`relative h-[180px] w-full max-w-[270px] overflow-hidden rounded-[22px] p-5 shadow-sm ${
+      className={`relative h-[180px] w-full overflow-hidden rounded-[22px] p-5 shadow-sm ${
         card.active
           ? "bg-gradient-to-br from-[#4b49f5] via-[#3734ed] to-[#211fe7] text-white"
           : "border border-gray-200 bg-white text-[#343b63]"
@@ -109,7 +96,7 @@ function BankCard({ card }) {
         />
       </div>
 
-      <div className="mt-6 flex gap-12">
+      <div className="mt-6 flex gap-8 sm:gap-12">
         <div>
           <p
             className={`text-[9px] ${
@@ -118,6 +105,7 @@ function BankCard({ card }) {
           >
             CARD HOLDER
           </p>
+
           <p className="mt-1 text-[11px] font-medium">
             {card.holder}
           </p>
@@ -131,6 +119,7 @@ function BankCard({ card }) {
           >
             VALID THRU
           </p>
+
           <p className="mt-1 text-[11px] font-medium">
             {card.valid}
           </p>
@@ -138,13 +127,13 @@ function BankCard({ card }) {
       </div>
 
       <div
-        className={`absolute bottom-0 left-0 right-0 flex items-center justify-between px-5 py-4 ${
+        className={`absolute bottom-0 left-0 right-0 flex items-center justify-between px-4 py-4 sm:px-5 ${
           card.active
             ? "bg-white/10"
             : "border-t border-gray-100 bg-white"
         }`}
       >
-        <span className="text-[15px] font-medium tracking-wide">
+        <span className="text-[13px] font-medium tracking-wide sm:text-[15px]">
           {card.number}
         </span>
 
@@ -170,20 +159,20 @@ function RecentTransactions() {
         </h2>
       </div>
 
-      <div className="rounded-[18px] bg-white px-5 py-3 shadow-sm">
+      <div className="rounded-[18px] bg-white px-4 py-3 shadow-sm sm:px-5">
         {transactions.map((item, index) => (
           <motion.div
             key={item.title}
             whileHover={{ x: 3 }}
-            className={`flex items-center justify-between py-3 ${
+            className={`flex items-center justify-between gap-3 py-3 ${
               index !== transactions.length - 1
                 ? "border-b border-gray-100"
                 : ""
             }`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 items-center gap-3">
               <div
-                className={`flex h-10 w-10 items-center justify-center rounded-full ${
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
                   item.type === "card"
                     ? "bg-yellow-50 text-yellow-500"
                     : item.type === "paypal"
@@ -200,10 +189,11 @@ function RecentTransactions() {
                 )}
               </div>
 
-              <div>
-                <p className="text-[12px] font-semibold text-[#343b63]">
+              <div className="min-w-0">
+                <p className="truncate text-[12px] font-semibold text-[#343b63]">
                   {item.title}
                 </p>
+
                 <p className="mt-1 text-[10px] text-gray-400">
                   {item.date}
                 </p>
@@ -211,7 +201,7 @@ function RecentTransactions() {
             </div>
 
             <span
-              className={`text-[12px] font-medium ${
+              className={`shrink-0 text-[12px] font-medium ${
                 item.negative ? "text-red-400" : "text-teal-400"
               }`}
             >
@@ -237,20 +227,14 @@ function WeeklyActivity() {
 
   return (
     <div className="w-full">
-      
-      {/* Heading */}
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3">
         <h2 className="text-[18px] font-semibold text-[#20284d]">
           Weekly Activity
         </h2>
       </div>
 
-      {/* Chart Card */}
-      <div className="w-full rounded-[20px] bg-white p-5">
-
-        {/* Legend */}
-        <div className="mb-4 flex justify-end gap-6">
-          
+      <div className="w-full rounded-[20px] bg-white p-4 sm:p-5">
+        <div className="mb-4 flex justify-end gap-4 sm:gap-6">
           <div className="flex items-center gap-2 text-[11px] text-gray-400">
             <span className="h-3 w-3 rounded-full bg-[#20c9b3]" />
             Deposit
@@ -260,64 +244,47 @@ function WeeklyActivity() {
             <span className="h-3 w-3 rounded-full bg-[#f27ba7]" />
             Withdraw
           </div>
-
         </div>
 
-        {/* Chart */}
-        <div className="relative h-[190px] w-full">
-
-          {/* Horizontal grid lines */}
+        <div className="relative h-[170px] w-full sm:h-[190px]">
           <div className="absolute left-0 right-0 top-0 border-t border-gray-100" />
           <div className="absolute left-0 right-0 top-[25%] border-t border-gray-100" />
           <div className="absolute left-0 right-0 top-[50%] border-t border-gray-100" />
           <div className="absolute left-0 right-0 top-[75%] border-t border-gray-100" />
           <div className="absolute bottom-0 left-0 right-0 border-t border-gray-100" />
 
-          {/* Bars */}
-          <div className="absolute inset-0 flex items-end justify-between px-4">
-
+          <div className="absolute inset-0 flex items-end justify-between px-1 sm:px-4">
             {bars.map((item) => (
               <div
                 key={item.day}
                 className="flex h-full flex-1 items-end justify-center"
               >
-                <div className="flex items-end gap-[6px]">
-
-                  {/* Deposit */}
+                <div className="flex items-end gap-[3px] sm:gap-[6px]">
                   <div
-                    className="w-[10px] rounded-full bg-[#2925e9]"
-                    style={{
-                      height: `${item.blue}px`,
-                    }}
+                    className="w-[7px] rounded-full bg-[#2925e9] sm:w-[10px]"
+                    style={{ height: `${item.blue}px` }}
                   />
 
-                  {/* Withdraw */}
                   <div
-                    className="w-[10px] rounded-full bg-[#20c9b3]"
-                    style={{
-                      height: `${item.green}px`,
-                    }}
+                    className="w-[7px] rounded-full bg-[#20c9b3] sm:w-[10px]"
+                    style={{ height: `${item.green}px` }}
                   />
-
                 </div>
               </div>
             ))}
-
           </div>
         </div>
 
-        {/* Days */}
-        <div className="mt-3 flex justify-between px-4">
+        <div className="mt-3 flex justify-between px-1 sm:px-4">
           {bars.map((item) => (
             <span
               key={item.day}
-              className="flex-1 text-center text-[10px] text-gray-400"
+              className="flex-1 text-center text-[9px] text-gray-400 sm:text-[10px]"
             >
               {item.day}
             </span>
           ))}
         </div>
-
       </div>
     </div>
   );
@@ -334,14 +301,12 @@ function ExpenseStatistics() {
 
       <div className="flex h-[245px] items-center justify-center rounded-[18px] bg-white shadow-sm">
         <div
-          className="relative h-[185px] w-[185px] rounded-full"
+          className="relative h-[170px] w-[170px] sm:h-[185px] sm:w-[185px] rounded-full"
           style={{
             background:
               "conic-gradient(from 0deg, #2926e8 0deg 126deg, white 126deg 132deg, #fa08c9 132deg 204deg, white 204deg 210deg, #343966 210deg 318deg, white 318deg 324deg, #ff7900 324deg 360deg)",
           }}
         >
-          <div className="absolute inset-[3px] rounded-full bg-transparent" />
-
           <div className="absolute left-[50%] top-[28%] -translate-x-1/2 text-center text-white">
             <p className="text-[12px] font-bold">30%</p>
             <p className="text-[9px] font-medium">Entertainment</p>
@@ -368,8 +333,6 @@ function ExpenseStatistics() {
 }
 
 function QuickTransfer() {
-  const [first, second, third] = people;
-
   return (
     <section>
       <div className="mb-4">
@@ -378,47 +341,47 @@ function QuickTransfer() {
         </h2>
       </div>
 
-      <div className="h-[210px] rounded-[18px] bg-white p-5 shadow-sm">
-        <div className="flex items-center justify-between">
-          {[first, second, third].map((person) => (
+      <div className="min-h-[210px] rounded-[18px] bg-white p-4 shadow-sm sm:p-5">
+        <div className="flex items-center justify-between gap-2">
+          {people.map((person) => (
             <div
               key={person.name}
-              className="text-center"
+              className="min-w-0 text-center"
             >
               <img
                 src={person.image}
                 alt={person.name}
-                className="mx-auto h-12 w-12 rounded-full object-cover"
+                className="mx-auto h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
               />
 
-              <p className="mt-2 text-[10px] font-semibold text-[#343b63]">
+              <p className="mt-2 truncate text-[9px] font-semibold text-[#343b63] sm:text-[10px]">
                 {person.name}
               </p>
 
-              <p className="mt-1 text-[9px] text-gray-400">
+              <p className="mt-1 text-[8px] text-gray-400 sm:text-[9px]">
                 {person.role}
               </p>
             </div>
           ))}
 
-          <button className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md">
+          <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white shadow-md sm:h-10 sm:w-10">
             <ChevronRight size={18} className="text-gray-500" />
           </button>
         </div>
 
-        <div className="mt-7 flex items-center gap-3">
+        <div className="mt-7 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
           <span className="text-[10px] text-gray-400">
             Write Amount
           </span>
 
-          <div className="flex flex-1 overflow-hidden rounded-full bg-[#f1f4fa]">
+          <div className="flex min-w-0 flex-1 overflow-hidden rounded-full bg-[#f1f4fa]">
             <input
               type="text"
               defaultValue="525.50"
-              className="min-w-0 flex-1 bg-transparent px-5 py-3 text-[11px] text-gray-500 outline-none"
+              className="min-w-0 flex-1 bg-transparent px-4 py-3 text-[11px] text-gray-500 outline-none sm:px-5"
             />
 
-            <button className="flex items-center gap-2 rounded-full bg-[#2825e8] px-5 py-3 text-[11px] font-medium text-white">
+            <button className="flex shrink-0 items-center gap-2 rounded-full bg-[#2825e8] px-4 py-3 text-[10px] font-medium text-white sm:px-5 sm:text-[11px]">
               Send
               <Send size={13} />
             </button>
@@ -438,7 +401,7 @@ function BalanceHistory() {
         </h2>
       </div>
 
-      <div className="h-[210px] rounded-[18px] bg-white p-5 shadow-sm">
+      <div className="h-[210px] rounded-[18px] bg-white p-4 shadow-sm sm:p-5">
         <svg
           viewBox="0 0 600 180"
           className="h-full w-full"
@@ -478,30 +441,12 @@ function BalanceHistory() {
           ))}
 
           <path
-            d="M20 145
-              C55 80 80 100 110 115
-              C135 128 150 60 180 65
-              C215 70 220 35 250 38
-              C280 40 275 125 310 132
-              C345 140 340 65 375 75
-              C410 85 405 130 440 138
-              C475 146 475 45 510 55
-              C535 62 555 78 580 70
-              L580 170
-              L20 170 Z"
+            d="M20 145 C55 80 80 100 110 115 C135 128 150 60 180 65 C215 70 220 35 250 38 C280 40 275 125 310 132 C345 140 340 65 375 75 C410 85 405 130 440 138 C475 146 475 45 510 55 C535 62 555 78 580 70 L580 170 L20 170 Z"
             fill="url(#balanceFill)"
           />
 
           <path
-            d="M20 145
-              C55 80 80 100 110 115
-              C135 128 150 60 180 65
-              C215 70 220 35 250 38
-              C280 40 275 125 310 132
-              C345 140 340 65 375 75
-              C410 85 405 130 440 138
-              C475 146 475 45 510 55
-              C535 62 555 78 580 70"
+            d="M20 145 C55 80 80 100 110 115 C135 128 150 60 180 65 C215 70 220 35 250 38 C280 40 275 125 310 132 C345 140 340 65 375 75 C410 85 405 130 440 138 C475 146 475 45 510 55 C535 62 555 78 580 70"
             fill="none"
             stroke="#2825e8"
             strokeWidth="3"
@@ -536,12 +481,10 @@ function BalanceHistory() {
 export default function Dashboard() {
   return (
     <div className="min-h-full bg-[#f5f7fb]">
-     
+      <main className="p-4 sm:p-5 md:p-7">
 
-      {/* Main */}
-      <main className="p-5 md:p-7">
         {/* Cards + Transactions */}
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.65fr_0.75fr]">
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.65fr_0.75fr] xl:gap-6">
           <section>
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-[17px] font-semibold text-[#343b63]">
@@ -553,7 +496,7 @@ export default function Dashboard() {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {cards.map((card, index) => (
                 <BankCard key={index} card={card} />
               ))}
@@ -564,16 +507,17 @@ export default function Dashboard() {
         </div>
 
         {/* Weekly + Expense */}
-        <div className="mt-7 grid grid-cols-1 gap-6 xl:grid-cols-[1.65fr_0.75fr]">
+        <div className="mt-6 grid grid-cols-1 gap-5 xl:grid-cols-[1.65fr_0.75fr] xl:gap-6">
           <WeeklyActivity />
           <ExpenseStatistics />
         </div>
 
         {/* Quick Transfer + Balance */}
-        <div className="mt-7 grid grid-cols-1 gap-6 xl:grid-cols-[0.85fr_1.35fr]">
+        <div className="mt-6 grid grid-cols-1 gap-5 xl:grid-cols-[0.85fr_1.35fr] xl:gap-6">
           <QuickTransfer />
           <BalanceHistory />
         </div>
+
       </main>
     </div>
   );

@@ -76,6 +76,26 @@ const specialOffers = [
   },
 ];
 
+function SummaryCard({ icon, title, value, bg, color }) {
+  return (
+    <div className="flex min-h-[88px] items-center gap-4 rounded-[18px] bg-white px-5 py-4 shadow-[0_2px_12px_rgba(0,0,0,0.02)]">
+      <div
+        className={`flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-[15px] ${bg} ${color}`}
+      >
+        {icon}
+      </div>
+
+      <div className="min-w-0">
+        <p className="truncate text-[11px] text-[#91a0ba]">{title}</p>
+
+        <p className="mt-1 text-[20px] font-semibold text-[#343c6a]">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function MyPrivileges() {
   const [claimed, setClaimed] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -99,40 +119,45 @@ function MyPrivileges() {
     showMessage(`${title} claimed successfully!`);
   };
 
-  return (
-    <div className="min-h-[calc(100vh-76px)] bg-[#f5f7fb] px-8 py-5">
+  const handleUseOffer = () => {
+    if (!selectedOffer) return;
 
-      {/* Message */}
+    showMessage(`${selectedOffer.title} selected successfully!`);
+    setSelectedOffer(null);
+  };
+
+  return (
+    <div className="min-h-full bg-[#f5f6fa] p-4 sm:p-5 lg:p-6 xl:p-7">
+      {/* Notification */}
       {message && (
-        <div className="fixed top-5 right-5 z-50 bg-[#3434eb] text-white px-5 py-3 rounded-xl shadow-lg text-sm">
+        <div className="fixed right-4 top-4 z-[100] max-w-[calc(100vw-32px)] rounded-xl bg-[#3434eb] px-5 py-3 text-[12px] text-white shadow-xl sm:right-6 sm:top-6">
           {message}
         </div>
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-5 flex items-center justify-between">
         <div>
-          <h2 className="text-[22px] font-semibold text-[#343c6a]">
+          <h1 className="text-[19px] font-semibold text-[#343c6a] sm:text-[21px]">
             My Privileges
-          </h2>
+          </h1>
 
-          <p className="text-[12px] text-[#91a0ba] mt-1">
+          <p className="mt-1 text-[11px] text-[#91a0ba] sm:text-[12px]">
             Enjoy exclusive rewards and benefits
           </p>
         </div>
 
-        <div className="w-[48px] h-[48px] rounded-[15px] bg-[#e9efff] text-[#4775ed] flex items-center justify-center">
-          <Gift size={23} />
+        <div className="flex h-[45px] w-[45px] shrink-0 items-center justify-center rounded-[14px] bg-[#e9efff] text-[#4775ed] sm:h-[48px] sm:w-[48px]">
+          <Gift size={22} />
         </div>
       </div>
 
-      {/* Rewards Summary */}
-      <div className="grid grid-cols-3 gap-5 mb-6">
-
+      {/* Summary */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <SummaryCard
           icon={<Gift size={21} />}
           title="Available Rewards"
-          value={`${privileges.length}`}
+          value={privileges.length}
           bg="bg-[#e9efff]"
           color="text-[#4775ed]"
         />
@@ -140,7 +165,7 @@ function MyPrivileges() {
         <SummaryCard
           icon={<CheckCircle size={21} />}
           title="Claimed Rewards"
-          value={`${claimed.length}`}
+          value={claimed.length}
           bg="bg-[#dffaf6]"
           color="text-[#35cfc1]"
         />
@@ -152,17 +177,15 @@ function MyPrivileges() {
           bg="bg-[#fff5d9]"
           color="text-[#efb52f]"
         />
-
       </div>
 
-      {/* Privileges */}
-      <section>
-        <h2 className="text-[18px] font-semibold text-[#343c6a] mb-3">
+      {/* Available Privileges */}
+      <section className="mt-6">
+        <h2 className="mb-3 text-[17px] font-semibold text-[#343c6a]">
           Available Privileges
         </h2>
 
-        <div className="grid grid-cols-2 gap-5">
-
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {privileges.map((item) => {
             const Icon = item.icon;
             const isClaimed = claimed.includes(item.id);
@@ -170,51 +193,48 @@ function MyPrivileges() {
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-[20px] p-5"
+                className="rounded-[19px] bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.02)] sm:p-5"
               >
-                <div className="flex items-start justify-between">
-
-                  <div className="flex items-center gap-4">
-
+                {/* Top */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 items-center gap-3 sm:gap-4">
                     <div
-                      className={`w-[50px] h-[50px] rounded-[15px] flex items-center justify-center ${item.bg} ${item.color}`}
+                      className={`flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-[14px] ${item.bg} ${item.color}`}
                     >
-                      <Icon size={22} />
+                      <Icon size={21} />
                     </div>
 
-                    <div>
-                      <p className="text-[14px] font-semibold text-[#343c6a]">
+                    <div className="min-w-0">
+                      <p className="truncate text-[13px] font-semibold text-[#343c6a] sm:text-[14px]">
                         {item.title}
                       </p>
 
-                      <p className="text-[11px] text-[#91a0ba] mt-1">
+                      <p className="mt-1 line-clamp-2 text-[10px] leading-4 text-[#91a0ba] sm:text-[11px]">
                         {item.description}
                       </p>
                     </div>
-
                   </div>
 
-                  <span className="text-[11px] font-semibold text-[#3434eb]">
+                  <span className="shrink-0 rounded-full bg-[#f0f3ff] px-2.5 py-1 text-[9px] font-semibold text-[#3434eb] sm:px-3 sm:text-[10px]">
                     {item.value}
                   </span>
-
                 </div>
 
-                <div className="mt-5 flex items-center justify-between">
-
+                {/* Bottom */}
+                <div className="mt-5 flex items-center justify-between border-t border-[#f0f2f6] pt-4">
                   <button
+                    type="button"
                     onClick={() => setSelectedOffer(item)}
-                    className="flex items-center gap-1 text-[11px] text-[#343c6a] hover:text-[#1712e8]"
+                    className="flex items-center gap-1 text-[10px] font-medium text-[#343c6a] transition hover:text-[#1712e8] sm:text-[11px]"
                   >
                     View Details
                     <ChevronRight size={14} />
                   </button>
 
                   <button
-                    onClick={() =>
-                      handleClaim(item.id, item.title)
-                    }
-                    className={`px-5 py-2 rounded-lg text-[11px] transition ${
+                    type="button"
+                    onClick={() => handleClaim(item.id, item.title)}
+                    className={`rounded-lg px-4 py-2 text-[10px] font-medium transition sm:px-5 sm:text-[11px] ${
                       isClaimed
                         ? "bg-[#dffaf6] text-[#22b9a9]"
                         : "bg-[#1712e8] text-white hover:bg-[#100dc5]"
@@ -222,161 +242,122 @@ function MyPrivileges() {
                   >
                     {isClaimed ? "Claimed" : "Claim Reward"}
                   </button>
-
                 </div>
               </div>
             );
           })}
-
         </div>
       </section>
 
       {/* Special Offers */}
       <section className="mt-6">
-
-        <h2 className="text-[18px] font-semibold text-[#343c6a] mb-3">
+        <h2 className="mb-3 text-[17px] font-semibold text-[#343c6a]">
           Special Offers
         </h2>
 
-        <div className="grid grid-cols-3 gap-5">
-
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {specialOffers.map((offer) => {
             const Icon = offer.icon;
 
             return (
               <div
                 key={offer.id}
-                className="bg-white rounded-[20px] p-5"
+                className="rounded-[19px] bg-white p-5 shadow-[0_2px_12px_rgba(0,0,0,0.02)]"
               >
-
                 <div className="flex items-center justify-between">
-
-                  <div className="w-[46px] h-[46px] rounded-[14px] bg-[#f0f4ff] text-[#4775ed] flex items-center justify-center">
+                  <div className="flex h-[46px] w-[46px] items-center justify-center rounded-[14px] bg-[#f0f4ff] text-[#4775ed]">
                     <Icon size={21} />
                   </div>
 
-                  <span className="text-[10px] font-semibold bg-[#ffe8f0] text-[#ed6b9a] px-3 py-1 rounded-full">
+                  <span className="rounded-full bg-[#ffe8f0] px-3 py-1 text-[9px] font-semibold text-[#ed6b9a]">
                     {offer.discount}
                   </span>
-
                 </div>
 
-                <h3 className="text-[14px] font-semibold text-[#343c6a] mt-4">
+                <h3 className="mt-4 text-[14px] font-semibold text-[#343c6a]">
                   {offer.title}
                 </h3>
 
-                <p className="text-[11px] text-[#91a0ba] mt-1">
+                <p className="mt-1 min-h-[32px] text-[11px] leading-4 text-[#91a0ba]">
                   {offer.description}
                 </p>
 
                 <button
+                  type="button"
                   onClick={() => setSelectedOffer(offer)}
-                  className="mt-4 w-full h-[38px] border border-[#e2e5ed] rounded-lg text-[11px] text-[#1712e8] font-medium hover:bg-[#f7f8fc]"
+                  className="mt-4 h-[38px] w-full rounded-lg border border-[#e2e5ed] text-[11px] font-medium text-[#1712e8] transition hover:bg-[#f7f8fc]"
                 >
                   View Offer
                 </button>
-
               </div>
             );
           })}
-
         </div>
       </section>
 
       {/* Modal */}
       {selectedOffer && (
-        <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
-
-          <div className="bg-white w-[430px] rounded-[20px] p-6">
-
-            <div className="flex items-center justify-between">
-
-              <h2 className="text-[19px] font-semibold text-[#343c6a]">
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-black/30 p-4"
+          onClick={() => setSelectedOffer(null)}
+        >
+          <div
+            className="w-full max-w-[430px] rounded-[20px] bg-white p-5 shadow-2xl sm:p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-[18px] font-semibold text-[#343c6a]">
                 {selectedOffer.title}
               </h2>
 
               <button
+                type="button"
                 onClick={() => setSelectedOffer(null)}
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f5f7fb]"
               >
-                <X
-                  size={20}
-                  className="text-[#91a0ba]"
-                />
+                <X size={17} className="text-[#91a0ba]" />
               </button>
-
             </div>
 
-            <div className="mt-5 bg-[#f7f9fc] rounded-[15px] p-5">
-
-              <p className="text-[12px] text-[#91a0ba]">
+            {/* Details */}
+            <div className="mt-5 rounded-[15px] bg-[#f7f9fc] p-5">
+              <p className="text-[11px] text-[#91a0ba]">
                 Offer Details
               </p>
 
-              <p className="text-[14px] text-[#343c6a] mt-2">
+              <p className="mt-2 text-[13px] leading-5 text-[#343c6a]">
                 {selectedOffer.description}
               </p>
 
               {selectedOffer.value && (
-                <p className="text-[18px] font-semibold text-[#1712e8] mt-4">
-                  {selectedOffer.value}
-                </p>
+                <div className="mt-4 inline-flex rounded-full bg-[#e9efff] px-4 py-2">
+                  <span className="text-[13px] font-semibold text-[#1712e8]">
+                    {selectedOffer.value}
+                  </span>
+                </div>
               )}
 
               {selectedOffer.discount && (
-                <p className="text-[18px] font-semibold text-[#1712e8] mt-4">
-                  {selectedOffer.discount}
-                </p>
+                <div className="mt-4 inline-flex rounded-full bg-[#ffe8f0] px-4 py-2">
+                  <span className="text-[13px] font-semibold text-[#ed6b9a]">
+                    {selectedOffer.discount}
+                  </span>
+                </div>
               )}
-
             </div>
 
+            {/* Modal Button */}
             <button
-              onClick={() => {
-                setSelectedOffer(null);
-                showMessage("Offer selected successfully!");
-              }}
-              className="w-full mt-5 h-[42px] bg-[#1712e8] text-white rounded-xl text-[12px]"
+              type="button"
+              onClick={handleUseOffer}
+              className="mt-5 h-[42px] w-full rounded-xl bg-[#1712e8] text-[12px] font-medium text-white transition hover:bg-[#100dc5]"
             >
               Use Offer
             </button>
-
           </div>
-
         </div>
       )}
-
-    </div>
-  );
-}
-
-/* Summary Card */
-
-function SummaryCard({
-  icon,
-  title,
-  value,
-  bg,
-  color,
-}) {
-  return (
-    <div className="bg-white rounded-[20px] p-5 flex items-center gap-4">
-
-      <div
-        className={`w-[48px] h-[48px] rounded-[15px] flex items-center justify-center ${bg} ${color}`}
-      >
-        {icon}
-      </div>
-
-      <div>
-        <p className="text-[11px] text-[#91a0ba]">
-          {title}
-        </p>
-
-        <p className="text-[20px] font-semibold text-[#343c6a] mt-1">
-          {value}
-        </p>
-      </div>
-
     </div>
   );
 }

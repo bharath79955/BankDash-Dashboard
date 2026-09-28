@@ -14,7 +14,6 @@ body,
 }
 
 body {
-  margin: 0;
   background: #f5f7fb;
   color: #343c6a;
   font-family: Arial, Helvetica, sans-serif;
@@ -57,30 +56,146 @@ img {
   background: #b8c0d0;
 }
 
-/* Remove default focus outline */
-
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
 }
 
-/* Responsive */
+/* ============================= */
+/* TABLET */
+/* ============================= */
 
 @media (max-width: 1024px) {
-  html {
-    font-size: 15px;
+
+  /* Main page padding */
+  main > div {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* 3 column layouts → 2 columns */
+  main .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* 4 column layouts → 2 columns */
+  main .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Fixed 270px side sections */
+  main [class*="grid-cols-[270px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Fixed 270px right sections */
+  main [class*="grid-cols-[1fr_270px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Reduce gaps */
+  main .gap-5 {
+    gap: 16px !important;
   }
 }
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
 
 @media (max-width: 768px) {
-  html {
-    font-size: 14px;
+
+  /* Page padding */
+  main > div {
+    padding: 16px !important;
+  }
+
+  /* All multi-column layouts become single column */
+  main .grid-cols-2,
+  main .grid-cols-3,
+  main .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  main [class*="grid-cols-["] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Smaller gaps */
+  main .gap-5 {
+    gap: 14px !important;
+  }
+
+  /* Header */
+  header {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hide desktop search on small screens */
+  header input {
+    display: none;
+  }
+
+  header > div {
+    gap: 8px !important;
+  }
+
+  /* Cards */
+  main [class*="h-[174px]"] {
+    height: 170px !important;
+  }
+
+  /* Tables */
+  table {
+    min-width: 650px;
+  }
+
+  /* Horizontal table scrolling */
+  .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Buttons */
+  button {
+    max-width: 100%;
   }
 }
 
-@media (max-width: 640px) {
-  html {
-    font-size: 13px;
+/* ============================= */
+/* SMALL MOBILE */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+  main > div {
+    padding: 12px !important;
+  }
+
+  header {
+    height: 65px !important;
+  }
+
+  header h1 {
+    font-size: 18px !important;
+  }
+
+  /* Prevent cards from overflowing */
+  main .rounded-\[20px\],
+  main .rounded-\[19px\],
+  main .rounded-\[17px\] {
+    max-width: 100%;
+  }
+
+  /* Form grids */
+  main .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Text */
+  main h2 {
+    font-size: 17px !important;
   }
 }

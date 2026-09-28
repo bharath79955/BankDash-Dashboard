@@ -11,8 +11,6 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-const PROFILE_IMAGE = "https://i.pravatar.cc/100?img=32";
-
 const transactions = [
   {
     name: "Spotify Subscription",
@@ -111,13 +109,13 @@ function BankCard({ primary = false }) {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -3 }}
-      className={`relative h-[174px] w-full max-w-[270px] overflow-hidden rounded-[20px] ${
+      className={`relative h-[174px] w-full max-w-full overflow-hidden rounded-[20px] sm:max-w-[270px] ${
         primary
           ? "bg-gradient-to-br from-[#4b4cff] via-[#3638f5] to-[#1717e8] text-white"
           : "border border-[#e5e7ef] bg-white text-[#343c6a]"
       }`}
     >
-      <div className="flex h-full flex-col justify-between p-5">
+      <div className="flex h-full flex-col justify-between p-4 sm:p-5">
 
         <div className="flex items-start justify-between">
           <div>
@@ -141,7 +139,7 @@ function BankCard({ primary = false }) {
           />
         </div>
 
-        <div className="flex gap-10">
+        <div className="flex gap-6 sm:gap-10">
           <div>
             <p
               className={`text-[9px] ${
@@ -172,13 +170,13 @@ function BankCard({ primary = false }) {
         </div>
 
         <div
-          className={`-mx-5 -mb-5 flex items-center justify-between px-5 py-3 ${
+          className={`-mx-4 -mb-4 flex items-center justify-between px-4 py-3 sm:-mx-5 sm:-mb-5 sm:px-5 ${
             primary
               ? "bg-white/10"
               : "border-t border-[#edf0f5]"
           }`}
         >
-          <span className="text-[16px] font-medium tracking-wide">
+          <span className="text-[14px] font-medium tracking-wide sm:text-[16px]">
             3778 ** ** 1234
           </span>
 
@@ -203,21 +201,21 @@ function BankCard({ primary = false }) {
 
 function ExpenseChart() {
   return (
-    <div className="h-[174px] rounded-[20px] bg-white px-5 py-4">
+    <div className="h-[174px] w-full rounded-[20px] bg-white px-4 py-4 sm:px-5">
       <div className="flex justify-end">
         <span className="text-[12px] font-medium text-[#343c6a]">
           $12,500
         </span>
       </div>
 
-      <div className="mt-1 flex h-[105px] items-end justify-between gap-3">
+      <div className="mt-1 flex h-[105px] items-end justify-between gap-2 sm:gap-3">
         {months.map((item) => (
           <div
             key={item.month}
             className="flex h-full flex-1 flex-col items-center justify-end gap-2"
           >
             <div
-              className={`w-[27px] rounded-t-[7px] ${
+              className={`w-[22px] rounded-t-[7px] sm:w-[27px] ${
                 item.active ? "bg-[#20d6c5]" : "bg-[#eef0f5]"
               }`}
               style={{
@@ -304,7 +302,10 @@ Amount: ${transaction.amount}
     const link = document.createElement("a");
 
     link.href = url;
-    link.download = `${transaction.name.replaceAll(" ", "_")}_receipt.txt`;
+    link.download = `${transaction.name.replaceAll(
+      " ",
+      "_"
+    )}_receipt.txt`;
 
     document.body.appendChild(link);
     link.click();
@@ -323,10 +324,10 @@ Amount: ${transaction.amount}
   };
 
   return (
-    <div className="min-h-full bg-[#f5f7fb] px-5 py-5 md:px-7">
+    <div className="min-h-full bg-[#f5f7fb] px-3 py-4 sm:px-5 sm:py-5 md:px-7">
 
       {/* Cards + Expense */}
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_270px]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_270px]">
 
         {/* My Cards */}
         <section>
@@ -337,13 +338,13 @@ Amount: ${transaction.amount}
 
             <button
               onClick={() => setShowAddCard(true)}
-              className="text-[14px] font-semibold text-[#343c6a] transition hover:text-[#1814f3]"
+              className="text-[13px] font-semibold text-[#343c6a] transition hover:text-[#1814f3] sm:text-[14px]"
             >
               + Add Card
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <BankCard primary />
             <BankCard />
           </div>
@@ -361,12 +362,17 @@ Amount: ${transaction.amount}
 
       {/* Success Message */}
       {message && (
-        <div className="fixed right-6 top-24 z-50 flex items-center gap-2 rounded-xl bg-white px-4 py-3 shadow-lg">
-          <CheckCircle size={18} className="text-[#20c9a3]" />
+        <div className="fixed left-3 right-3 top-20 z-50 flex items-center justify-between gap-2 rounded-xl bg-white px-4 py-3 shadow-lg sm:left-auto sm:right-6 sm:top-24">
+          <div className="flex items-center gap-2">
+            <CheckCircle
+              size={18}
+              className="text-[#20c9a3]"
+            />
 
-          <span className="text-[12px] font-medium text-[#343c6a]">
-            {message}
-          </span>
+            <span className="text-[12px] font-medium text-[#343c6a]">
+              {message}
+            </span>
+          </div>
 
           <button
             onClick={() => setMessage("")}
@@ -385,8 +391,11 @@ Amount: ${transaction.amount}
         </h2>
 
         {/* Search */}
-        <div className="mb-4 flex h-[42px] max-w-[350px] items-center gap-2 rounded-full bg-white px-4">
-          <Search size={17} className="text-[#8993aa]" />
+        <div className="mb-4 flex h-[42px] w-full max-w-[350px] items-center gap-2 rounded-full bg-white px-4">
+          <Search
+            size={17}
+            className="shrink-0 text-[#8993aa]"
+          />
 
           <input
             value={search}
@@ -396,34 +405,36 @@ Amount: ${transaction.amount}
             }}
             type="text"
             placeholder="Search transactions..."
-            className="w-full bg-transparent text-[12px] outline-none placeholder:text-[#9aa3b8]"
+            className="w-full min-w-0 bg-transparent text-[12px] outline-none placeholder:text-[#9aa3b8]"
           />
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-10 border-b border-[#e2e5ec] md:gap-12">
+        <div className="flex gap-6 overflow-x-auto border-b border-[#e2e5ec] sm:gap-10 md:gap-12">
 
-          {["All Transactions", "Income", "Expense"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => changeTab(tab)}
-              className={`relative pb-3 text-[13px] font-medium ${
-                activeTab === tab
-                  ? "text-[#1814f3]"
-                  : "text-[#8993aa]"
-              }`}
-            >
-              {tab}
+          {["All Transactions", "Income", "Expense"].map(
+            (tab) => (
+              <button
+                key={tab}
+                onClick={() => changeTab(tab)}
+                className={`relative shrink-0 pb-3 text-[12px] font-medium sm:text-[13px] ${
+                  activeTab === tab
+                    ? "text-[#1814f3]"
+                    : "text-[#8993aa]"
+                }`}
+              >
+                {tab}
 
-              {activeTab === tab && (
-                <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-[#1814f3]" />
-              )}
-            </button>
-          ))}
+                {activeTab === tab && (
+                  <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-[#1814f3]" />
+                )}
+              </button>
+            )
+          )}
         </div>
 
         {/* Table */}
-        <div className="mt-5 overflow-x-auto rounded-[20px] bg-white">
+        <div className="mt-5 w-full overflow-x-auto rounded-[20px] bg-white">
 
           <table className="w-full min-w-[850px] border-collapse">
 
@@ -462,76 +473,74 @@ Amount: ${transaction.amount}
 
             <tbody>
               {currentTransactions.length > 0 ? (
-                currentTransactions.map((transaction, index) => (
-                  <motion.tr
-                    key={transaction.id}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="border-b border-[#edf0f5] last:border-0"
-                  >
-                    {/* Description */}
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-
-                        <span className="flex h-[24px] w-[24px] items-center justify-center rounded-full border border-[#a8b6d2] text-[#657ba7]">
-                          {transaction.direction === "up" ? (
-                            <ArrowUp size={13} />
-                          ) : (
-                            <ArrowDown size={13} />
-                          )}
-                        </span>
-
-                        <span className="whitespace-nowrap text-[12px] text-[#343c6a]">
-                          {transaction.name}
-                        </span>
-                      </div>
-                    </td>
-
-                    {/* ID */}
-                    <td className="px-4 py-4 text-[12px] text-[#343c6a]">
-                      {transaction.id}
-                    </td>
-
-                    {/* Type */}
-                    <td className="px-4 py-4 text-[12px] text-[#343c6a]">
-                      {transaction.type}
-                    </td>
-
-                    {/* Card */}
-                    <td className="px-4 py-4 text-[12px] text-[#343c6a]">
-                      {transaction.card}
-                    </td>
-
-                    {/* Date */}
-                    <td className="whitespace-nowrap px-4 py-4 text-[12px] text-[#343c6a]">
-                      {transaction.date}
-                    </td>
-
-                    {/* Amount */}
-                    <td
-                      className={`px-4 py-4 text-[12px] font-medium ${
-                        transaction.positive
-                          ? "text-[#16c79a]"
-                          : "text-[#ff4b7d]"
-                      }`}
+                currentTransactions.map(
+                  (transaction, index) => (
+                    <motion.tr
+                      key={transaction.id}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        delay: index * 0.05,
+                      }}
+                      className="border-b border-[#edf0f5] last:border-0"
                     >
-                      {transaction.amount}
-                    </td>
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-3">
 
-                    {/* Download */}
-                    <td className="px-4 py-4">
-                      <button
-                        onClick={() =>
-                          handleDownload(transaction)
-                        }
-                        className="rounded-full border border-[#293a8f] px-4 py-1.5 text-[11px] text-[#293a8f] transition hover:bg-[#293a8f] hover:text-white"
+                          <span className="flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full border border-[#a8b6d2] text-[#657ba7]">
+                            {transaction.direction ===
+                            "up" ? (
+                              <ArrowUp size={13} />
+                            ) : (
+                              <ArrowDown size={13} />
+                            )}
+                          </span>
+
+                          <span className="whitespace-nowrap text-[12px] text-[#343c6a]">
+                            {transaction.name}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-4 text-[12px] text-[#343c6a]">
+                        {transaction.id}
+                      </td>
+
+                      <td className="px-4 py-4 text-[12px] text-[#343c6a]">
+                        {transaction.type}
+                      </td>
+
+                      <td className="px-4 py-4 text-[12px] text-[#343c6a]">
+                        {transaction.card}
+                      </td>
+
+                      <td className="whitespace-nowrap px-4 py-4 text-[12px] text-[#343c6a]">
+                        {transaction.date}
+                      </td>
+
+                      <td
+                        className={`px-4 py-4 text-[12px] font-medium ${
+                          transaction.positive
+                            ? "text-[#16c79a]"
+                            : "text-[#ff4b7d]"
+                        }`}
                       >
-                        Download
-                      </button>
-                    </td>
-                  </motion.tr>
-                ))
+                        {transaction.amount}
+                      </td>
+
+                      <td className="px-4 py-4">
+                        <button
+                          onClick={() =>
+                            handleDownload(transaction)
+                          }
+                          className="whitespace-nowrap rounded-full border border-[#293a8f] px-4 py-1.5 text-[11px] text-[#293a8f] transition hover:bg-[#293a8f] hover:text-white"
+                        >
+                          Download
+                        </button>
+                      </td>
+                    </motion.tr>
+                  )
+                )
               ) : (
                 <tr>
                   <td
@@ -547,14 +556,16 @@ Amount: ${transaction.amount}
         </div>
 
         {/* Pagination */}
-        <div className="mt-5 flex items-center justify-end gap-2 pb-4">
+        <div className="flex flex-wrap items-center justify-center gap-2 py-4 sm:justify-end">
 
           <button
             disabled={page === 1}
             onClick={() =>
-              setPage((current) => Math.max(1, current - 1))
+              setPage((current) =>
+                Math.max(1, current - 1)
+              )
             }
-            className={`mr-2 flex items-center gap-1 text-[12px] ${
+            className={`mr-1 flex items-center gap-1 text-[12px] sm:mr-2 ${
               page === 1
                 ? "cursor-not-allowed text-gray-300"
                 : "text-[#1814f3]"
@@ -588,7 +599,7 @@ Amount: ${transaction.amount}
                 Math.min(totalPages, current + 1)
               )
             }
-            className={`ml-2 flex items-center gap-1 text-[12px] ${
+            className={`ml-1 flex items-center gap-1 text-[12px] sm:ml-2 ${
               page === totalPages
                 ? "cursor-not-allowed text-gray-300"
                 : "text-[#1814f3]"
@@ -604,7 +615,7 @@ Amount: ${transaction.amount}
       {showAddCard && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
 
-          <div className="w-full max-w-[420px] rounded-[20px] bg-white p-6 shadow-xl">
+          <div className="w-full max-w-[420px] rounded-[20px] bg-white p-5 shadow-xl sm:p-6">
 
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-[18px] font-semibold text-[#343c6a]">
@@ -644,7 +655,7 @@ Amount: ${transaction.amount}
                 className="mb-4 w-full rounded-xl border border-gray-200 px-4 py-3 text-[12px] outline-none focus:border-[#1814f3]"
               />
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
 
                 <div>
                   <label className="mb-2 block text-[11px] text-gray-500">
